@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ========== ESTILOS PREMIUM ========== */
+        /* ========== ESTILOS PREMIUM (mantidos) ========== */
         * {
             margin: 0;
             padding: 0;
@@ -73,6 +73,72 @@
 
         body.light-mode .sobre-box .linha-divisoria {
             background: linear-gradient(90deg, transparent, #b8860b, transparent);
+        }
+
+        body.light-mode .comentarios-box {
+            background: #e8dfd3;
+            border-color: #b8860b;
+            box-shadow: 0 20px 60px rgba(184, 134, 11, 0.15);
+        }
+
+        body.light-mode .comentarios-box .comentario-item {
+            background: #f5f0e8;
+            border-color: rgba(184, 134, 11, 0.2);
+        }
+
+        body.light-mode .comentarios-box .comentario-item .nome {
+            color: #b8860b;
+        }
+
+        body.light-mode .comentarios-box .comentario-item .texto {
+            color: #1e1b18;
+        }
+
+        body.light-mode .comentarios-box .comentario-item.meu-comentario {
+            background: rgba(184, 134, 11, 0.15);
+            border-color: #b8860b;
+            box-shadow: 0 0 20px rgba(184, 134, 11, 0.1);
+        }
+
+        body.light-mode .comentarios-box .form-comentario input,
+        body.light-mode .comentarios-box .form-comentario textarea {
+            background: #f5f0e8;
+            color: #1e1b18;
+            border-color: rgba(184, 134, 11, 0.3);
+        }
+
+        body.light-mode .comentarios-box .form-comentario input:focus,
+        body.light-mode .comentarios-box .form-comentario textarea:focus {
+            border-color: #b8860b;
+            box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.2);
+        }
+
+        body.light-mode .comentarios-box .btn-carregar {
+            background: #b8860b;
+            color: #f5f0e8;
+        }
+
+        body.light-mode .comentarios-box .btn-carregar:hover {
+            background: #a0750a;
+        }
+
+        body.light-mode .comentarios-box .btn-enviar {
+            background: #b8860b;
+            color: #f5f0e8;
+        }
+
+        body.light-mode .comentarios-box .btn-enviar:hover {
+            background: #a0750a;
+        }
+
+        body.light-mode .comentarios-box .btn-eliminar-coment {
+            background: rgba(184, 134, 11, 0.15);
+            color: #b8860b;
+        }
+
+        body.light-mode .comentarios-box .btn-eliminar-coment:hover {
+            background: #b8860b;
+            color: #f5f0e8;
         }
 
         body.light-mode footer {
@@ -274,7 +340,7 @@
 
         /* SOBRE NÓS PREMIUM */
         .sobre-section {
-            padding: 50px 0;
+            padding: 50px 0 30px;
         }
 
         .sobre-box {
@@ -401,6 +467,420 @@
             transform: scale(1.01);
             border-color: rgba(184, 134, 11, 0.5);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+        }
+
+        /* ========== COMENTÁRIOS ========== */
+        .comentarios-section {
+            padding: 10px 0 50px;
+        }
+
+        .comentarios-box {
+            background: #141212;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 30px;
+            padding: 40px 50px;
+            max-width: 1050px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(184, 134, 11, 0.1);
+            transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comentarios-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #f5d742, transparent);
+            opacity: 0.6;
+        }
+
+        .comentarios-box .titulo-comentarios {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.2rem;
+            color: #f5d742;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        body.light-mode .comentarios-box .titulo-comentarios {
+            color: #b8860b;
+        }
+
+        .comentarios-box .subtitulo-comentarios {
+            font-size: 1rem;
+            color: #cdc6b5;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        body.light-mode .comentarios-box .subtitulo-comentarios {
+            color: #2a241c;
+        }
+
+        .lista-comentarios {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .lista-comentarios::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .lista-comentarios::-webkit-scrollbar-track {
+            background: #1c1815;
+            border-radius: 10px;
+        }
+
+        .lista-comentarios::-webkit-scrollbar-thumb {
+            background: #b8860b;
+            border-radius: 10px;
+        }
+
+        body.light-mode .lista-comentarios::-webkit-scrollbar-track {
+            background: #d9cebd;
+        }
+
+        body.light-mode .lista-comentarios::-webkit-scrollbar-thumb {
+            background: #b8860b;
+        }
+
+        .comentario-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(184, 134, 11, 0.12);
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            transition: 0.3s ease;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .comentario-item:hover {
+            border-color: rgba(184, 134, 11, 0.3);
+            background: rgba(184, 134, 11, 0.04);
+        }
+
+        .comentario-item.meu-comentario {
+            border-color: #f5d742;
+            background: rgba(245, 215, 66, 0.08);
+            box-shadow: 0 0 30px rgba(245, 215, 66, 0.05);
+            order: -1;
+        }
+
+        body.light-mode .comentario-item.meu-comentario {
+            border-color: #b8860b;
+            background: rgba(184, 134, 11, 0.12);
+            box-shadow: 0 0 30px rgba(184, 134, 11, 0.1);
+        }
+
+        .comentario-item .conteudo {
+            flex: 1;
+        }
+
+        .comentario-item .nome {
+            font-weight: 700;
+            color: #f5d742;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .comentario-item .texto {
+            color: #cdc6b5;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .comentario-item .btn-eliminar-coment {
+            background: transparent;
+            border: 1px solid rgba(184, 134, 11, 0.2);
+            color: #8f846f;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: 'Roboto Condensed', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .comentario-item .btn-eliminar-coment:hover {
+            background: rgba(184, 134, 11, 0.15);
+            border-color: #b8860b;
+            color: #f5d742;
+        }
+
+        body.light-mode .comentario-item .btn-eliminar-coment:hover {
+            background: rgba(184, 134, 11, 0.2);
+            color: #b8860b;
+        }
+
+        .comentario-item .btn-eliminar-coment.oculto {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-carregar {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            color: #f5d742;
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: 'Roboto Condensed', sans-serif;
+            margin: 0 auto 30px;
+            display: block;
+        }
+
+        .btn-carregar:hover {
+            background: rgba(184, 134, 11, 0.1);
+            border-color: #b8860b;
+            transform: scale(1.03);
+        }
+
+        .form-comentario {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 10px;
+            border-top: 1px solid rgba(184, 134, 11, 0.1);
+            padding-top: 25px;
+        }
+
+        .form-comentario .campo-nome {
+            grid-column: 1 / 2;
+        }
+
+        .form-comentario .campo-comentario {
+            grid-column: 2 / 3;
+        }
+
+        .form-comentario .campo-comentario textarea {
+            height: 100%;
+            resize: vertical;
+        }
+
+        .form-comentario .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .form-comentario label {
+            font-weight: 600;
+            color: #f0ece4;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        body.light-mode .form-comentario label {
+            color: #1e1b18;
+        }
+
+        .form-comentario input,
+        .form-comentario textarea {
+            width: 100%;
+            background: #1c1815;
+            border: 1px solid #3d3229;
+            border-radius: 12px;
+            padding: 10px 14px;
+            color: #f0ece4;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 0.95rem;
+            transition: 0.3s ease;
+        }
+
+        .form-comentario input:focus,
+        .form-comentario textarea:focus {
+            outline: none;
+            border-color: #b8860b;
+            box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
+        }
+
+        .form-comentario textarea {
+            min-height: 80px;
+        }
+
+        .form-comentario .btn-enviar {
+            background: #f5d742;
+            border: none;
+            color: #0b0a0a;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: 'Roboto Condensed', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-comentario .btn-enviar:hover {
+            background: #ffe066;
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(245, 215, 66, 0.2);
+        }
+
+        .form-comentario .btn-enviar:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* POPUP DE SUBMISSÃO E ERRO */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+        }
+
+        .popup {
+            background: linear-gradient(145deg, #1f1a16, #0e0c0a);
+            border: 2px solid #b8860b;
+            border-radius: 40px;
+            padding: 45px 50px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 60px #b8860b55, 0 0 120px #b8860b22;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        body.light-mode .popup {
+            background: linear-gradient(145deg, #e8dfd3, #d9cebd);
+        }
+
+        .popup.erro {
+            border-color: #e74c3c;
+        }
+
+        .popup.erro .icon {
+            color: #e74c3c;
+        }
+
+        .popup.erro h2 {
+            color: #e74c3c;
+        }
+
+        body.light-mode .popup.erro {
+            border-color: #e74c3c;
+        }
+
+        body.light-mode .popup.erro h2 {
+            color: #e74c3c;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.6);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup .icon {
+            font-size: 4rem;
+            color: #f5d742;
+            margin-bottom: 15px;
+        }
+
+        .popup h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            color: #f5d742;
+            margin-bottom: 10px;
+        }
+
+        body.light-mode .popup h2 {
+            color: #b8860b;
+        }
+
+        .popup p {
+            color: #cdc6b5;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        body.light-mode .popup p {
+            color: #2a241c;
+        }
+
+        .popup .btn-fechar-popup {
+            background: #b8860b;
+            color: #0b0a0a;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: 'Roboto Condensed', sans-serif;
+            margin-top: 15px;
+        }
+
+        .popup .btn-fechar-popup:hover {
+            background: #f5d742;
+            transform: scale(1.05);
+        }
+
+        .popup.erro .btn-fechar-popup {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        .popup.erro .btn-fechar-popup:hover {
+            background: #c0392b;
         }
 
         /* FOOTER PREMIUM */
@@ -591,6 +1071,30 @@
                 font-size: 1rem;
             }
 
+            .comentarios-box {
+                padding: 30px 25px;
+            }
+
+            .comentarios-box .titulo-comentarios {
+                font-size: 1.8rem;
+            }
+
+            .form-comentario {
+                grid-template-columns: 1fr;
+            }
+
+            .form-comentario .campo-nome {
+                grid-column: 1;
+            }
+
+            .form-comentario .campo-comentario {
+                grid-column: 1;
+            }
+
+            .form-comentario .form-actions {
+                justify-content: center;
+            }
+
             .footer-grid {
                 flex-direction: column;
                 align-items: center;
@@ -631,6 +1135,24 @@
                 font-size: 0.95rem;
             }
 
+            .comentarios-box {
+                padding: 25px 18px;
+            }
+
+            .comentarios-box .titulo-comentarios {
+                font-size: 1.5rem;
+            }
+
+            .comentario-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .comentario-item .btn-eliminar-coment {
+                align-self: flex-start;
+                margin-top: 8px;
+            }
+
             .nav-actions button {
                 font-size: 0.8rem;
                 padding: 5px 10px;
@@ -642,6 +1164,15 @@
 
             .logo h1 {
                 font-size: 1.8rem;
+            }
+
+            .form-comentario .btn-enviar {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .popup {
+                padding: 30px 20px;
             }
         }
     </style>
@@ -675,6 +1206,7 @@
     </header>
 
     <main class="container">
+        <!-- Sobre Nós -->
         <section class="sobre-section">
             <div class="sobre-box">
                 <h1 class="titulo-principal" id="tituloPrincipal">Ultra Barber</h1>
@@ -707,7 +1239,47 @@
                 </div>
             </div>
         </section>
+
+        <!-- Comentários -->
+        <section class="comentarios-section">
+            <div class="comentarios-box">
+                <h2 class="titulo-comentarios" id="tituloComentarios">💬 O que dizem os nossos clientes</h2>
+                <p class="subtitulo-comentarios" id="subtituloComentarios">Opiniões reais de quem confia na Ultra Barber</p>
+
+                <div class="lista-comentarios" id="listaComentarios"></div>
+
+                <button class="btn-carregar" id="btnCarregarMais">
+                    <i class="fas fa-sync-alt" style="margin-right: 8px;"></i> <span id="btnCarregarText">Carregar mais comentários</span>
+                </button>
+
+                <form class="form-comentario" id="formComentario">
+                    <div class="campo-nome">
+                        <label for="nomeInput" id="labelNome">Seu nome</label>
+                        <input type="text" id="nomeInput" placeholder="Ex: João Matimele" required>
+                    </div>
+                    <div class="campo-comentario">
+                        <label for="comentarioInput" id="labelComentario">Comentário</label>
+                        <textarea id="comentarioInput" placeholder="Escreva sua opinião..." required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-enviar" id="btnEnviar">
+                            <i class="fas fa-paper-plane"></i> <span id="btnEnviarText">Enviar comentário</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
     </main>
+
+    <!-- POPUP DE SUBMISSÃO / ERRO -->
+    <div class="popup-overlay" id="popupSubmissao">
+        <div class="popup" id="popupConteudo">
+            <div class="icon"><i class="fas fa-check-circle"></i></div>
+            <h2 id="popupTitulo">✅ Comentário enviado!</h2>
+            <p id="popupMensagem">O seu comentário foi adicionado com sucesso.</p>
+            <button class="btn-fechar-popup" id="btnFecharPopup"><i class="fas fa-thumbs-up" style="margin-right: 8px;"></i> <span id="popupBtnText">Fechar</span></button>
+        </div>
+    </div>
 
     <footer>
         <div class="container footer-grid">
@@ -756,6 +1328,240 @@
                 });
             });
 
+            // ========== LISTA DE 50 COMENTÁRIOS ==========
+            const comentariosBase = [
+                "João Matimele: Melhor barbearia da cidade! Atendimento impecável. 👏",
+                "Carlos Cossa: Fiz o corte hoje e fiquei muito satisfeito. Recomendo!",
+                "Ernesto Sitoe: Os barbeiros da Ultra Barber são muito profissionais.",
+                "Nelson Chauque: Melhor degradê que já fiz. Voltarei sempre.",
+                "Armando Baloi: Atendimento rápido e ambiente muito agradável.",
+                "Joaquim Mucavele: Nota 10 para toda a equipa da Ultra Barber.",
+                "Paulo Chissano: Serviço de qualidade e preço justo.",
+                "Celso Mondlane: Sempre saio daqui com um corte perfeito.",
+                "Domingos Bila: Muito capricho em cada detalhe.",
+                "Tomás Nhantumbo: Sem dúvida a melhor barbearia que conheço.",
+                "Ismael Mabunda: Excelente atendimento e muita simpatia.",
+                "Alberto Tembe: Recomendo a todos os meus amigos.",
+                "Manuel Mahumane: Profissionais experientes e muito educados.",
+                "Sérgio Ubisse: Ambiente limpo e muito organizado.",
+                "António Macuácua: Gostei muito do atendimento. Cinco estrelas!",
+                "Gilberto Mbanze: Serviço de excelência. Continuem assim!",
+                "Ricardo Machel: Corte impecável como sempre.",
+                "Luís Nhamirre: A Ultra Barber nunca decepciona.",
+                "Osvaldo Cumbe: Melhor experiência que já tive numa barbearia.",
+                "Filipe Zitha: Atendimento rápido e resultado excelente.",
+                "Orlando Mahungo: Os barbeiros entendem mesmo do assunto.",
+                "Mateus Cumbane: Trabalho muito profissional. Parabéns!",
+                "Pedro Jone: Qualidade acima da média.",
+                "Eduardo Macamo: Corte exatamente como pedi.",
+                "Francisco Chongo: Virei cliente fiel da Ultra Barber.",
+                "Adriano Mabote: O melhor lugar para cuidar do visual.",
+                "Jaime Guambe: Muito satisfeito com o serviço.",
+                "Daniel Mavota: Excelente ambiente e ótimo atendimento.",
+                "Fernando Uqueio: Recomendo sem pensar duas vezes.",
+                "Alberto Nhachungue: Melhor barbearia da zona.",
+                "Jorge Mussagy: Gostei muito do profissionalismo da equipa.",
+                "Samuel Mucavel: Serviço muito bem feito.",
+                "Cláudio Machava: Atendimento cinco estrelas.",
+                "Bento Mbilana: Sempre saio daqui com autoestima lá em cima.",
+                "Elias Sumbana: Muito capricho nos cortes.",
+                "Adérito Mucave: Atendimento diferenciado e muito respeitoso.",
+                "Valter Sidumo: Vale cada metical investido.",
+                "Hermínio Mabjaia: Serviço rápido e muito eficiente.",
+                "Gabriel Chivale: A melhor experiência de sempre.",
+                "David Mungoi: Corte moderno e muito bem acabado.",
+                "José Matola: Recomendo a Ultra Barber para todos.",
+                "Mário Mussa: Os barbeiros trabalham com muita dedicação.",
+                "Ali Faquira: Excelente qualidade e ótimo atendimento.",
+                "Amade Sulemane: Gostei bastante do corte e do ambiente.",
+                "Jamal Momade: Profissionais de alto nível.",
+                "Ismael Cassamo: Melhor escolha para quem quer um corte de qualidade.",
+                "Celestino Candeeiro: Atendimento impecável do início ao fim.",
+                "Abílio Mussanhane: Serviço de confiança. Voltarei sempre.",
+                "Eusébio Cumbana: A Ultra Barber merece nota máxima.",
+                "Bernardo Mucanheia: Sem dúvidas, a melhor barbearia. Parabéns a toda a equipa! 💈🔥"
+            ];
+
+            // ========== ELEMENTOS ==========
+            const listaEl = document.getElementById('listaComentarios');
+            const btnCarregar = document.getElementById('btnCarregarMais');
+            const form = document.getElementById('formComentario');
+            const nomeInput = document.getElementById('nomeInput');
+            const comentarioInput = document.getElementById('comentarioInput');
+
+            // Popup
+            const popupOverlay = document.getElementById('popupSubmissao');
+            const popupConteudo = document.getElementById('popupConteudo');
+            const popupTitulo = document.getElementById('popupTitulo');
+            const popupMensagem = document.getElementById('popupMensagem');
+            const popupBtnText = document.getElementById('popupBtnText');
+            const popupFecharBtn = document.getElementById('btnFecharPopup');
+
+            // ========== ESTADO ==========
+            let todosComentarios = comentariosBase.map((texto, index) => {
+                const [nome, ...resto] = texto.split(':');
+                return {
+                    id: Date.now() + index + Math.random(),
+                    nome: nome.trim(),
+                    texto: resto.join(':').trim(),
+                    isMine: false
+                };
+            });
+
+            let comentariosExibidos = [];
+
+            // ========== FUNÇÕES ==========
+            function embaralhar(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function carregarMaisComentarios() {
+                const idsExibidos = new Set(comentariosExibidos.map(c => c.id));
+                const disponiveis = todosComentarios.filter(c => !idsExibidos.has(c.id));
+
+                if (disponiveis.length === 0) {
+                    // Reinicia o ciclo
+                    comentariosExibidos = [];
+                    const todos = [...todosComentarios];
+                    // Ordena para que os "mine" fiquem primeiro (já estarão no topo)
+                    const sorted = todos.sort((a, b) => (a.isMine === b.isMine) ? 0 : a.isMine ? -1 : 1);
+                    const shuffled = embaralhar(sorted.filter(c => !c.isMine));
+                    const primeiros = shuffled.slice(0, 8);
+                    comentariosExibidos = [...sorted.filter(c => c.isMine), ...primeiros];
+                    renderizarComentarios();
+                    return;
+                }
+
+                const shuffled = embaralhar([...disponiveis]);
+                const novos = shuffled.slice(0, 8);
+                comentariosExibidos = [...comentariosExibidos, ...novos];
+                renderizarComentarios();
+            }
+
+            function renderizarComentarios() {
+                if (comentariosExibidos.length === 0) {
+                    const sorted = [...todosComentarios].sort((a, b) => (a.isMine === b.isMine) ? 0 : a.isMine ? -1 : 1);
+                    const shuffled = embaralhar(sorted.filter(c => !c.isMine));
+                    const primeiros = shuffled.slice(0, 8);
+                    comentariosExibidos = [...sorted.filter(c => c.isMine), ...primeiros];
+                }
+
+                listaEl.innerHTML = '';
+                comentariosExibidos.forEach(com => {
+                    const div = document.createElement('div');
+                    div.className = 'comentario-item' + (com.isMine ? ' meu-comentario' : '');
+                    div.dataset.id = com.id;
+
+                    const conteudo = document.createElement('div');
+                    conteudo.className = 'conteudo';
+                    conteudo.innerHTML = `
+                        <div class="nome">${com.nome}</div>
+                        <div class="texto">${com.texto}</div>
+                    `;
+
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-eliminar-coment' + (com.isMine ? '' : ' oculto');
+                    btn.innerHTML = `<i class="fas fa-trash-alt"></i> <span class="btn-eliminar-text">${currentLang === 'en' ? 'Delete' : 'Eliminar'}</span>`;
+                    if (com.isMine) {
+                        btn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            eliminarComentario(com.id);
+                        });
+                    }
+
+                    div.appendChild(conteudo);
+                    div.appendChild(btn);
+                    listaEl.appendChild(div);
+                });
+
+                // Atualiza texto do botão carregar
+                const idsExibidos = new Set(comentariosExibidos.map(c => c.id));
+                const restam = todosComentarios.filter(c => !idsExibidos.has(c.id)).length;
+                const btnText = document.getElementById('btnCarregarText');
+                if (restam === 0) {
+                    btnText.textContent = currentLang === 'en' ? 'Refresh comments' : 'Recarregar comentários';
+                } else {
+                    btnText.textContent = currentLang === 'en' ? `Load more (${restam} left)` :
+                        `Carregar mais (${restam} restantes)`;
+                }
+            }
+
+            function eliminarComentario(id) {
+                // Remove do array principal
+                todosComentarios = todosComentarios.filter(c => c.id !== id);
+                // Remove dos exibidos
+                comentariosExibidos = comentariosExibidos.filter(c => c.id !== id);
+                renderizarComentarios();
+            }
+
+            function adicionarComentario(nome, texto) {
+                const novo = {
+                    id: Date.now() + Math.random(),
+                    nome: nome.trim(),
+                    texto: texto.trim(),
+                    isMine: true
+                };
+                todosComentarios.push(novo);
+                // Insere no início da lista exibida (topo)
+                comentariosExibidos = [novo, ...comentariosExibidos];
+                renderizarComentarios();
+
+                // Mostrar popup de sucesso
+                mostrarPopup(true);
+            }
+
+            function mostrarPopup(sucesso) {
+                popupConteudo.classList.remove('erro');
+                if (sucesso) {
+                    popupConteudo.classList.remove('erro');
+                    popupConteudo.querySelector('.icon').innerHTML = '<i class="fas fa-check-circle"></i>';
+                    popupTitulo.textContent = currentLang === 'en' ? '✅ Comment sent!' : '✅ Comentário enviado!';
+                    popupMensagem.textContent = currentLang === 'en' ? 'Your comment has been added successfully.' :
+                        'O seu comentário foi adicionado com sucesso.';
+                    popupBtnText.textContent = currentLang === 'en' ? 'Close' : 'Fechar';
+                } else {
+                    popupConteudo.classList.add('erro');
+                    popupConteudo.querySelector('.icon').innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+                    popupTitulo.textContent = currentLang === 'en' ? '⚠️ Missing fields' : '⚠️ Campos vazios';
+                    popupMensagem.textContent = currentLang === 'en' ?
+                        'Please fill in all fields before submitting.' :
+                        'Preencha todos os campos antes de enviar.';
+                    popupBtnText.textContent = currentLang === 'en' ? 'OK' : 'OK';
+                }
+                popupOverlay.classList.add('active');
+            }
+
+            // ========== EVENTOS ==========
+            btnCarregar.addEventListener('click', carregarMaisComentarios);
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nome = nomeInput.value.trim();
+                const texto = comentarioInput.value.trim();
+
+                if (nome === '' || texto === '') {
+                    mostrarPopup(false);
+                    return;
+                }
+
+                adicionarComentario(nome, texto);
+                form.reset();
+            });
+
+            popupFecharBtn.addEventListener('click', function() {
+                popupOverlay.classList.remove('active');
+            });
+
+            popupOverlay.addEventListener('click', function(e) {
+                if (e.target === popupOverlay) {
+                    popupOverlay.classList.remove('active');
+                }
+            });
+
             // ========== TRADUÇÃO ==========
             let currentLang = localStorage.getItem('ultraLang') || 'pt';
 
@@ -780,7 +1586,18 @@
                     link2: 'Trabalhe conosco',
                     link3: 'FAQ',
                     themeLabel: 'Claro',
-                    themeLabelDark: 'Escuro'
+                    themeLabelDark: 'Escuro',
+                    tituloComentarios: '💬 O que dizem os nossos clientes',
+                    subtituloComentarios: 'Opiniões reais de quem confia na Ultra Barber',
+                    btnCarregar: 'Carregar mais comentários',
+                    btnCarregarRestam: 'Carregar mais ({restam} restantes)',
+                    btnCarregarRecarregar: 'Recarregar comentários',
+                    labelNome: 'Seu nome',
+                    labelComentario: 'Comentário',
+                    btnEnviar: 'Enviar comentário',
+                    btnEliminar: 'Eliminar',
+                    placeholderNome: 'Ex: João Matimele',
+                    placeholderComentario: 'Escreva sua opinião...'
                 },
                 en: {
                     titulo: 'Ultra Barber',
@@ -802,7 +1619,18 @@
                     link2: 'Work with us',
                     link3: 'FAQ',
                     themeLabel: 'Light',
-                    themeLabelDark: 'Dark'
+                    themeLabelDark: 'Dark',
+                    tituloComentarios: '💬 What our clients say',
+                    subtituloComentarios: 'Real opinions from those who trust Ultra Barber',
+                    btnCarregar: 'Load more comments',
+                    btnCarregarRestam: 'Load more ({restam} left)',
+                    btnCarregarRecarregar: 'Refresh comments',
+                    labelNome: 'Your name',
+                    labelComentario: 'Comment',
+                    btnEnviar: 'Send comment',
+                    btnEliminar: 'Delete',
+                    placeholderNome: 'Ex: John Doe',
+                    placeholderComentario: 'Write your opinion...'
                 }
             };
 
@@ -833,6 +1661,38 @@
                 document.getElementById('linkPolitica').textContent = t.link1;
                 document.getElementById('linkTrabalhe').textContent = t.link2;
                 document.getElementById('linkFaq').textContent = t.link3;
+
+                // Comentários
+                document.getElementById('tituloComentarios').textContent = t.tituloComentarios;
+                document.getElementById('subtituloComentarios').textContent = t.subtituloComentarios;
+                document.getElementById('labelNome').textContent = t.labelNome;
+                document.getElementById('labelComentario').textContent = t.labelComentario;
+                document.getElementById('btnEnviarText').textContent = t.btnEnviar;
+                nomeInput.placeholder = t.placeholderNome;
+                comentarioInput.placeholder = t.placeholderComentario;
+
+                // Atualiza botão carregar
+                const idsExibidos = new Set(comentariosExibidos.map(c => c.id));
+                const restam = todosComentarios.filter(c => !idsExibidos.has(c.id)).length;
+                const btnText = document.getElementById('btnCarregarText');
+                if (restam === 0) {
+                    btnText.textContent = t.btnCarregarRecarregar;
+                } else {
+                    btnText.textContent = t.btnCarregarRestam.replace('{restam}', restam);
+                }
+
+                // Atualiza texto dos botões eliminar
+                document.querySelectorAll('.btn-eliminar-coment .btn-eliminar-text').forEach(el => {
+                    el.textContent = t.btnEliminar;
+                });
+
+                // Se o popup estiver aberto, atualiza seus textos (exceto se for erro)
+                if (popupOverlay.classList.contains('active') && !popupConteudo.classList.contains('erro')) {
+                    popupTitulo.textContent = t === 'pt' ? '✅ Comentário enviado!' : '✅ Comment sent!';
+                    popupMensagem.textContent = t === 'pt' ? 'O seu comentário foi adicionado com sucesso.' :
+                        'Your comment has been added successfully.';
+                    popupBtnText.textContent = t === 'pt' ? 'Fechar' : 'Close';
+                }
 
                 const themeLabel = document.getElementById('themeLabel');
                 const isLight = document.body.classList.contains('light-mode');
@@ -886,6 +1746,7 @@
                 currentLang = newLang;
                 localStorage.setItem('ultraLang', newLang);
                 aplicarTraducao();
+                renderizarComentarios();
             });
 
             // ========== RELÓGIO ==========
@@ -897,6 +1758,11 @@
             setInterval(updateClock, 1000);
 
             // ========== INICIALIZAR ==========
+            const shuffled = embaralhar([...todosComentarios]);
+            // Coloca os comentários do usuário (se houver) no topo
+            const sorted = shuffled.sort((a, b) => (a.isMine === b.isMine) ? 0 : a.isMine ? -1 : 1);
+            comentariosExibidos = sorted.slice(0, 8);
+            renderizarComentarios();
             aplicarTraducao();
 
         })();
