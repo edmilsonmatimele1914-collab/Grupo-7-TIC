@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Barber · Agendamento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ========== ESTILOS COMPLETOS ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto Condensed', sans-serif;
+            background: #0b0a0a;
+            color: #f0ece4;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+        body.light-mode {
+            background: #f5f0e8;
+            color: #1e1b18;
+        }
+        body.light-mode header {
+            background: #e8dfd3;
+            border-bottom: 3px solid #b8860b;
+        }
+        body.light-mode .logo h1 {
+            color: #b8860b;
+            text-shadow: 0 0 8px #b8860b55;
+        }
+        body.light-mode .logo span {
+            color: #2a241c;
+        }
+        body.light-mode .nav-links a {
+            color: #2a241c;
+        }
+        body.light-mode .nav-links a:hover {
+            color: #b8860b;
+            border-bottom-color: #b8860b;
+        }
+        body.light-mode .agendamento-box {
+            background: #e8dfd3;
+            border-color: #b8860b;
+        }
+        body.light-mode .agendamento-box label {
+            color: #1e1b18;
+        }
+        body.light-mode .agendamento-box select,
+        body.light-mode .agendamento-box input {
+            background: #f5f0e8;
+            color: #1e1b18;
+            border-color: #b8860b88;
+        }
+        body.light-mode .agendamento-box .preco-final {
+            background: #b8860b;
+            color: #f5f0e8;
+        }
+        body.light-mode .historico-box {
+            background: #e8dfd3;
+            border-color: #b8860b;
+        }
+        body.light-mode .historico-item {
+            background: #f5f0e8;
+            border-color: #b8860b55;
+        }
+        body.light-mode .banner-texto {
+            color: #1e1b18;
+        }
+        body.light-mode .banner-texto span {
+            color: #b8860b;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        header {
+            background: #141212;
+            padding: 20px 0;
+            border-bottom: 3px solid #b8860b;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            transition: background 0.3s, border-color 0.3s;
+            position: relative;
+            z-index: 100;
+        }
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .logo h1 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 2.4rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #f5d742;
+            text-shadow: 0 0 12px #b8860b88;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .logo span {
+            color: #f0ece4;
+            font-weight: 300;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: #e0d6c0;
+            text-decoration: none;
+            transition: 0.3s;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-links a:hover {
+            color: #f5d742;
+            border-bottom-color: #b8860b;
+        }
+        .nav-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .nav-actions button {
+            background: transparent;
+            border: 1px solid #b8860b88;
+            color: #f5d742;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+        .nav-actions button:hover {
+            background: #b8860b;
+            color: #0b0a0a;
+            border-color: #b8860b;
+        }
+        body.light-mode .nav-actions button {
+            color: #b8860b;
+            border-color: #b8860b88;
+        }
+        body.light-mode .nav-actions button:hover {
+            background: #b8860b;
+            color: #f5f0e8;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: #f5d742;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .banner-texto {
+            text-align: center;
+            padding: 20px 0 10px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            color: #f0ece4;
+        }
+        .banner-texto span {
+            color: #f5d742;
+            text-shadow: 0 0 20px #b8860b66;
+        }
+        .banner-texto .fa-scissors {
+            color: #f5d742;
+            margin: 0 10px;
+        }
+        .imagem-destaque {
+            text-align: center;
+            padding: 15px 0 25px;
+        }
+        .imagem-destaque img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            border: 2px solid #b8860b55;
+            box-shadow: 0 10px 30px #00000077;
+            max-height: 400px;
+            object-fit: cover;
+        }
+        .page-title {
+            text-align: center;
+            padding: 10px 0 20px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.8rem;
+            color: #f5d742;
+            text-shadow: 0 0 20px #b8860b66;
+        }
+        body.light-mode .page-title {
+            color: #b8860b;
+        }
+        .agendamento-section {
+            padding: 0 0 30px;
+        }
+        .agendamento-box {
+            background: #141212;
+            border: 2px solid #b8860b55;
+            border-radius: 30px;
+            padding: 35px 40px;
+            max-width: 950px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px #00000077;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 25px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #f0ece4;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-group label i {
+            color: #f5d742;
+        }
+        .form-group select,
+        .form-group input {
+            background: #1c1815;
+            border: 1px solid #3d3229;
+            border-radius: 12px;
+            padding: 11px 15px;
+            color: #f0ece4;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            width: 100%;
+        }
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #b8860b;
+            box-shadow: 0 0 0 3px #b8860b44;
+        }
+        .form-group select option {
+            background: #1c1815;
+            color: #f0ece4;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 6px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #b8860b;
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            font-weight: 400;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .preco-final {
+            background: #b8860b;
+            color: #0b0a0a;
+            padding: 18px 25px;
+            border-radius: 16px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+            letter-spacing: 1px;
+            font-family: 'Oswald', sans-serif;
+            transition: 0.3s;
+        }
+        .preco-final span {
+            font-size: 1.8rem;
+            color: #0b0a0a;
+        }
+        .preco-final small {
+            font-size: 0.9rem;
+            font-weight: 300;
+            display: block;
+            color: #2a241c;
+            margin-top: 4px;
+        }
+        .btn-agendar {
+            display: inline-block;
+            padding: 16px 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: 0.3s;
+            border: none;
+            font-size: 1.2rem;
+            background: #f5d742;
+            color: #0b0a0a;
+            box-shadow: 0 0 30px #f5d74266;
+            cursor: pointer;
+            font-family: 'Roboto Condensed', sans-serif;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .btn-agendar:hover {
+            background: #ffe066;
+            transform: scale(1.02);
+        }
+        .historico-section {
+            padding: 20px 0 40px;
+        }
+        .historico-box {
+            background: #141212;
+            border: 2px solid #b8860b55;
+            border-radius: 30px;
+            padding: 25px 30px;
+            max-width: 950px;
+            margin: 0 auto;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .historico-box h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            color: #f5d742;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        body.light-mode .historico-box h3 {
+            color: #b8860b;
+        }
+        .historico-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .historico-lista::-webkit-scrollbar {
+            width: 6px;
+        }
+        .historico-lista::-webkit-scrollbar-track {
+            background: #1c1815;
+            border-radius: 10px;
+        }
+        .historico-lista::-webkit-scrollbar-thumb {
+            background: #b8860b;
+            border-radius: 10px;
+        }
+        .historico-item {
+            background: #1c1815;
+            border: 1px solid #3d3229;
+            border-radius: 14px;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            transition: 0.3s;
+        }
+        .historico-item:hover {
+            border-color: #b8860b;
+        }
+        .historico-item .info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+        }
+        .historico-item .info .nome {
+            font-weight: 600;
+            color: #f5d742;
+        }
+        .historico-item .info .detalhes {
+            font-size: 0.85rem;
+            color: #b3a692;
+        }
+        .historico-item .info .preco-historico {
+            font-weight: 700;
+            color: #f5d742;
+            font-size: 1rem;
+        }
+        .btn-eliminar {
+            background: #b8860b;
+            color: #0b0a0a;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-eliminar:hover {
+            background: #d4a017;
+            transform: scale(1.05);
+        }
+        .sem-pedidos {
+            color: #8f846f;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 1.1rem;
+        }
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-overlay.active {
+            display: flex;
+        }
+        .popup {
+            background: linear-gradient(145deg, #1f1a16, #0e0c0a);
+            border: 2px solid #b8860b;
+            border-radius: 40px;
+            padding: 45px 50px;
+            max-width: 520px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 60px #b8860b55, 0 0 120px #b8860b22;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        body.light-mode .popup {
+            background: linear-gradient(145deg, #e8dfd3, #d9cebd);
+        }
+        @keyframes popIn {
+            0% {
+                transform: scale(0.6);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .popup .icon {
+            font-size: 4.5rem;
+            color: #f5d742;
+            margin-bottom: 15px;
+        }
+        .popup h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.2rem;
+            color: #f5d742;
+            margin-bottom: 10px;
+        }
+        body.light-mode .popup h2 {
+            color: #b8860b;
+        }
+        .popup p {
+            color: #cdc6b5;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        body.light-mode .popup p {
+            color: #2a241c;
+        }
+        .popup .detalhes-pedido {
+            background: #1c1815;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin: 18px 0;
+            text-align: left;
+            font-size: 0.95rem;
+            border-left: 4px solid #b8860b;
+        }
+        body.light-mode .popup .detalhes-pedido {
+            background: #f5f0e8;
+        }
+        .popup .detalhes-pedido strong {
+            color: #f5d742;
+        }
+        body.light-mode .popup .detalhes-pedido strong {
+            color: #b8860b;
+        }
+        .popup .btn-fechar {
+            background: #b8860b;
+            color: #0b0a0a;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Roboto Condensed', sans-serif;
+            margin-top: 10px;
+        }
+        .popup .btn-fechar:hover {
+            background: #f5d742;
+            transform: scale(1.05);
+        }
+        footer {
+            background: #0e0c0a;
+            padding: 30px 0;
+            border-top: 1px solid #2a241c;
+            margin-top: 20px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        body.light-mode footer {
+            background: #d9cebd;
+            border-top: 1px solid #b8860b55;
+        }
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .footer-left .copy {
+            color: #8f846f;
+            font-weight: 300;
+            font-size: 0.95rem;
+        }
+        body.light-mode .footer-left .copy {
+            color: #2a241c;
+        }
+        .footer-selos {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .footer-selos i {
+            font-size: 1.8rem;
+            color: #b8860b;
+            filter: drop-shadow(0 0 6px #b8860b55);
+            transition: 0.3s;
+        }
+        .footer-selos i:hover {
+            transform: scale(1.1);
+            color: #f5d742;
+        }
+        .footer-selos span {
+            font-size: 0.8rem;
+            color: #b3a692;
+            font-weight: 300;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        body.light-mode .footer-selos span {
+            color: #2a241c;
+        }
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        .footer-social a {
+            color: #b3a692;
+            margin: 0 10px;
+            font-size: 1.6rem;
+            transition: 0.3s;
+        }
+        .footer-social a:hover {
+            color: #f5d742;
+            transform: scale(1.2);
+        }
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        .footer-links a {
+            color: #b3a692;
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 0.95rem;
+        }
+        .footer-links a:hover {
+            color: #f5d742;
+        }
+        .horario {
+            background: #1c1815;
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 1px solid #b8860b55;
+            font-size: 0.95rem;
+            color: #f5d742;
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        body.light-mode .horario {
+            background: #d9cebd;
+            color: #b8860b;
+            border-color: #b8860b;
+        }
+        .horario i {
+            color: #b8860b;
+        }
+        @media (max-width: 850px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 15px;
+                padding: 15px 0;
+                border-top: 1px solid #b8860b44;
+                margin-top: 10px;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                gap: 12px;
+            }
+            .nav-actions {
+                margin-left: 0;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .header-flex {
+                flex-wrap: wrap;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .agendamento-box {
+                padding: 25px 20px;
+            }
+            .historico-box {
+                padding: 20px 18px;
+            }
+            .popup {
+                padding: 30px 25px;
+            }
+            .banner-texto {
+                font-size: 1.5rem;
+            }
+            .page-title {
+                font-size: 2.2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            .banner-texto {
+                font-size: 1.2rem;
+            }
+            .page-title {
+                font-size: 1.8rem;
+            }
+            .nav-actions button {
+                font-size: 0.8rem;
+                padding: 4px 10px;
+            }
+            .preco-final {
+                font-size: 1.2rem;
+                padding: 14px 18px;
+            }
+            .preco-final span {
+                font-size: 1.4rem;
+            }
+            .imagem-destaque img {
+                max-height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-flex">
+            <div class="logo">
+                <h1>Ultra <span>Barber</span></h1>
+            </div>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-menu" id="navMenu">
+                <div class="nav-links">
+                    <a href="sobre.html" id="navSobre">Sobre</a>
+                    <a href="localizacao.html" id="navLocalizacao">Localização</a>
+                    <a href="contactos.html" id="navContactos">Contactos</a>
+                    <div class="nav-actions">
+                        <button id="themeToggle"><i class="fas fa-moon"></i> <span id="themeLabel">Escuro</span></button>
+                        <button id="langToggle"><i class="fas fa-globe"></i> <span id="langLabel">EN</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="banner-texto" id="bannerTexto">
+            <i class="fas fa-scissors"></i>
+            Bem vindo à <span>Ultra Barber</span>, onde o seu estilo ganha força!
+            <i class="fas fa-scissors"></i>
+        </div>
+
+        <div class="imagem-destaque">
+            <img src="https://github.com/RodrigueJoaossiquisse/IMC/blob/main/IMG_20260729_150149.png?raw=true" alt="Ultra Barber - Imagem de destaque">
+        </div>
+
+        <h1 class="page-title" id="pageTitle"><i class="fas fa-calendar-check" style="margin-right: 14px;"></i>Agendamento</h1>
+
+        <section class="agendamento-section">
+            <div class="agendamento-box">
+                <form id="agendamentoForm" class="form-grid">
+                    <!-- Tipo de Cliente removido -->
+
+                    <div class="form-group">
+                        <label id="labelCorte"><i class="fas fa-cut"></i> Corte</label>
+                        <select id="corteSelect">
+                            <option value="careca">Careca (Raspado Total)</option>
+                            <option value="lowfade">Degradê (Low Fade)</option>
+                            <option value="midfade" selected>Degradê (Mid Fade)</option>
+                            <option value="highfade">Degradê (High Fade)</option>
+                            <option value="skinfade">Skin Fade</option>
+                            <option value="baldfade">Bald Fade</option>
+                            <option value="shadowfade">Shadow Fade</option>
+                            <option value="taperfade">Taper Fade</option>
+                            <option value="templefade">Temple Fade</option>
+                            <option value="dropfade">Drop Fade</option>
+                            <option value="burstfade">Burst Fade</option>
+                            <option value="buzzcut">Buzz Cut</option>
+                            <option value="crewcut">Crew Cut</option>
+                            <option value="frenchcrop">French Crop</option>
+                            <option value="caesarcut">Caesar Cut</option>
+                            <option value="ivyleague">Ivy League</option>
+                            <option value="texturedcrop">Textured Crop</option>
+                            <option value="fringecrop">Fringe Crop</option>
+                            <option value="curlytop">Curly Top Fade</option>
+                            <option value="afrocurto">Afro Curto</option>
+                            <option value="afrofade">Afro com Fade</option>
+                            <option value="taperafro">Taper Afro</option>
+                            <option value="hightopfade">High Top Fade</option>
+                            <option value="flattop">Flat Top</option>
+                            <option value="waves">360 Waves</option>
+                            <option value="spongecurls">Sponge Curls</option>
+                            <option value="twists">Twists</option>
+                            <option value="twostrand">Two-Strand Twists</option>
+                            <option value="afrotwist">Afro Twist</option>
+                            <option value="cornrows">Cornrows</option>
+                            <option value="dreadshort">Dreadlocks Curtos</option>
+                            <option value="dreadmedium">Dreadlocks Médios</option>
+                            <option value="dreadlong">Dreadlocks Longos</option>
+                            <option value="boxbraids">Box Braids Masculinas</option>
+                            <option value="knotless">Knotless Braids Masculinas</option>
+                            <option value="undercut">Undercut</option>
+                            <option value="sidepart">Side Part</option>
+                            <option value="slickback">Slick Back</option>
+                            <option value="pompadour">Pompadour</option>
+                            <option value="quiff">Quiff</option>
+                            <option value="combover">Comb Over</option>
+                            <option value="militar">Corte Militar</option>
+                            <option value="americano">Corte Americano</option>
+                            <option value="mohawk">Mohawk Fade</option>
+                            <option value="fauxhawk">Faux Hawk Fade</option>
+                            <option value="mullet">Mullet Moderno</option>
+                            <option value="wolfcut">Wolf Cut Masculino</option>
+                            <option value="risca">Corte com Risca</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="labelBarba"><i class="fas fa-hand-sparkles"></i> Barba</label>
+                        <select id="barbaSelect">
+                            <option value="cleanshaven">Sem Barba</option>
+                            <option value="stubble">Barba por Fazer</option>
+                            <option value="curta">Barba Curta</option>
+                            <option value="media">Barba Média</option>
+                            <option value="longa">Barba Longa</option>
+                            <option value="fullbeard" selected>Barba Cheia</option>
+                            <option value="fadebeard">Barba Degradê</option>
+                            <option value="desenhada">Barba Desenhada</option>
+                            <option value="alinhada">Barba Alinhada</option>
+                            <option value="cavanhaque">Cavanhaque</option>
+                            <option value="cavanhaquebigode">Cavanhaque c/ Bigode</option>
+                            <option value="bigodeclassico">Bigode Clássico</option>
+                            <option value="bigodechevron">Bigode Chevron</option>
+                            <option value="bigodelapis">Bigode Lápis</option>
+                            <option value="bigodeferradura">Bigode Ferradura</option>
+                            <option value="balbo">Barba Balbo</option>
+                            <option value="vandyke">Barba Van Dyke</option>
+                            <option value="anchor">Barba Anchor</option>
+                            <option value="circlebeard">Barba Circle Beard</option>
+                            <option value="garibaldi">Barba Garibaldi</option>
+                            <option value="ducktail">Barba Ducktail</option>
+                            <option value="bandholz">Barba Bandholz</option>
+                            <option value="viking">Barba Viking</option>
+                            <option value="boxed">Barba Boxed</option>
+                            <option value="chinstrap">Chin Strap</option>
+                            <option value="muttonchops">Mutton Chops</option>
+                            <option value="costeletasclassicas">Costeletas Clássicas</option>
+                            <option value="costeletaslongas">Costeletas Longas</option>
+                            <option value="bigodecavanhaque">Bigode + Cavanhaque</option>
+                            <option value="bigodebarbacurta">Bigode + Barba Curta</option>
+                        </select>
+                    </div>
+
+                    <!-- Grupo Bebida - será ocultado quando domicílio estiver ativo -->
+                    <div class="form-group" id="bebidaGroup">
+                        <label id="labelBebida"><i class="fas fa-mug-hot"></i> Bebida</label>
+                        <select id="bebidaSelect">
+                            <option value="0">Nenhum</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="labelExtra"><i class="fas fa-plus-circle"></i> Extra</label>
+                        <select id="extraSelect">
+                            <option value="nenhum">Nenhum</option>
+                            <option value="lavar">Lavar a Cabeça (100 MT)</option>
+                            <option value="lavarcond">Lavar + Condicionador (150 MT)</option>
+                            <option value="massagem">Massagem ao Couro Cabeludo (200 MT)</option>
+                            <option value="hidratacao">Hidratação Capilar (300 MT)</option>
+                            <option value="gel">Aplicação de Gel/Pomada (50 MT)</option>
+                            <option value="secador">Finalização com Secador (100 MT)</option>
+                            <option value="escovagem">Escovagem Masculina (150 MT)</option>
+                            <option value="prancha">Prancha (Alisamento Temporário) (250 MT)</option>
+                            <option value="pinturabarba">Pintura da Barba (250 MT)</option>
+                            <option value="pinturacabelo">Pintura do Cabelo (300 MT)</option>
+                            <option value="pigmentacaobarba">Pigmentação da Barba (250 MT)</option>
+                            <option value="pigmentacaocabelo">Pigmentação do Cabelo (300 MT)</option>
+                            <option value="sobrancelhas">Design de Sobrancelhas (100 MT)</option>
+                            <option value="nariz">Depilação de Nariz (100 MT)</option>
+                            <option value="orelhas">Depilação de Orelhas (100 MT)</option>
+                            <option value="limpeza">Limpeza Facial Simples (300 MT)</option>
+                            <option value="esfoliacao">Esfoliação Facial (250 MT)</option>
+                            <option value="mascara">Máscara Facial (200 MT)</option>
+                            <option value="toalha">Toalha Quente (100 MT)</option>
+                            <option value="barboterapia">Barboterapia (350 MT)</option>
+                            <option value="apararbarba">Aparar Apenas a Barba (150 MT)</option>
+                            <option value="alinhamentobarba">Alinhamento da Barba (100 MT)</option>
+                            <option value="acabamento">Acabamento (Pezinho) (50 MT)</option>
+                            <option value="lavagembarba">Lavagem da Barba (100 MT)</option>
+                            <option value="massagemfacial">Massagem Facial (200 MT)</option>
+                            <option value="perfume">Perfume/Colónia Premium (50 MT)</option>
+                            <option value="bebidaextra">Bebida (Água/Refrigerante) (50 MT)</option>
+                            <option value="cafeextra">Café (50 MT)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="labelData"><i class="fas fa-calendar-day"></i> Data</label>
+                        <input type="date" id="dataInput">
+                    </div>
+
+                    <div class="form-group">
+                        <label id="labelHora"><i class="fas fa-clock"></i> Horário</label>
+                        <input type="time" id="horaInput" value="14:00">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label id="labelLocalizacao"><i class="fas fa-map-pin"></i> Localização</label>
+                        <input type="text" id="localizacaoInput" placeholder="Ex: Rua das Flores, 123 - Maputo" value="Rua das Flores, 123 - Maputo">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="domicilioCheck">
+                            <label id="labelDomicilio" for="domicilioCheck"><i class="fas fa-truck" style="color: #f5d742;"></i> Corte ao domicílio (+35%)</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <div class="preco-final" id="precoFinal">
+                            <i class="fas fa-coins" style="margin-right: 10px;"></i>
+                            <span id="precoLabel">Preço Final:</span> <span id="precoValor">0</span> MT
+                            <small id="descontoInfo"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <button type="button" class="btn-agendar" id="btnAgendar">
+                            <i class="fas fa-check-circle" style="margin-right: 10px;"></i> <span id="btnAgendarText">Agendar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="historico-section">
+            <div class="historico-box">
+                <h3 id="historicoTitulo"><i class="fas fa-history"></i> Histórico de Pedidos</h3>
+                <div class="historico-lista" id="historicoLista">
+                    <div class="sem-pedidos" id="semPedidos">Nenhum pedido realizado ainda.</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup">
+            <div class="icon"><i class="fas fa-check-circle"></i></div>
+            <h2 id="popupTitulo">✅ Pedido Confirmado!</h2>
+            <p id="popupSub">Seu agendamento foi realizado com sucesso.</p>
+            <div class="detalhes-pedido" id="popupDetalhes"></div>
+            <button class="btn-fechar" id="popupFechar"><i class="fas fa-thumbs-up" style="margin-right: 8px;"></i> <span id="popupBtnText">Fechar</span></button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-left">
+                <div class="copy" id="footerCopy">&copy; 2026 Ultra Barber · Todos os direitos reservados</div>
+                <div class="footer-selos">
+                    <span id="selo1"><i class="fas fa-lock"></i> SSL Seguro</span>
+                    <span id="selo2"><i class="fas fa-shield-alt"></i> Proteção de Dados</span>
+                    <span id="selo3"><i class="fas fa-credit-card"></i> Pagamento Seguro</span>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="horario">
+                    <i class="far fa-clock"></i> <span id="currentTime">00:00:00</span>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="footer-links">
+                    <a href="#" id="linkPolitica">Política</a>
+                    <a href="#" id="linkTrabalhe">Trabalhe conosco</a>
+                    <a href="#" id="linkFaq">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            // ========== HAMBURGUER ==========
+            const hamburger = document.getElementById('hamburgerBtn');
+            const navMenu = document.getElementById('navMenu');
+
+            hamburger.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+
+            // ========== DADOS ==========
+            const bebidas = [
+                { nome: 'Nenhum', nomeEn: 'None', preco: 0 },
+                { nome: 'Água 500 ml', nomeEn: 'Water 500 ml', preco: 60 },
+                { nome: 'Água 1,5 L', nomeEn: 'Water 1.5 L', preco: 100 },
+                { nome: 'Coca-Cola', nomeEn: 'Coca-Cola', preco: 70 },
+                { nome: 'Fanta', nomeEn: 'Fanta', preco: 70 },
+                { nome: 'Sprite', nomeEn: 'Sprite', preco: 70 },
+                { nome: 'Sparletta', nomeEn: 'Sparletta', preco: 70 },
+                { nome: 'Dry Lemon', nomeEn: 'Dry Lemon', preco: 70 },
+                { nome: 'Ginger Ale', nomeEn: 'Ginger Ale', preco: 70 },
+                { nome: 'Lipton Ice Tea', nomeEn: 'Lipton Ice Tea', preco: 150 },
+                { nome: 'Appletiser', nomeEn: 'Appletiser', preco: 200 },
+                { nome: 'Red Bull', nomeEn: 'Red Bull', preco: 240 },
+                { nome: 'Compal', nomeEn: 'Compal', preco: 140 },
+                { nome: 'Ceres', nomeEn: 'Ceres', preco: 150 },
+                { nome: 'Sumo Natural', nomeEn: 'Sumo Natural', preco: 250 },
+                { nome: 'Café Expresso', nomeEn: 'Espresso', preco: 110 },
+                { nome: 'Cappuccino', nomeEn: 'Cappuccino', preco: 150 },
+                { nome: 'Chá', nomeEn: 'Tea', preco: 80 },
+                { nome: '2M', nomeEn: '2M', preco: 110 },
+                { nome: 'Laurentina', nomeEn: 'Laurentina', preco: 140 },
+                { nome: 'Manica', nomeEn: 'Manica', preco: 140 },
+                { nome: 'Impala', nomeEn: 'Impala', preco: 110 },
+                { nome: 'Txilar', nomeEn: 'Txilar', preco: 150 },
+                { nome: 'Castle Lite', nomeEn: 'Castle Lite', preco: 180 },
+                { nome: 'Heineken', nomeEn: 'Heineken', preco: 200 },
+                { nome: 'Stella Artois', nomeEn: 'Stella Artois', preco: 210 },
+                { nome: 'Corona', nomeEn: 'Corona', preco: 240 },
+                { nome: 'Savanna', nomeEn: 'Savanna', preco: 210 },
+                { nome: 'Hunters', nomeEn: 'Hunters', preco: 210 },
+                { nome: 'Brutal', nomeEn: 'Brutal', preco: 210 },
+                { nome: 'Bernini', nomeEn: 'Bernini', preco: 210 },
+                { nome: 'Amarula (dose)', nomeEn: 'Amarula (shot)', preco: 250 },
+                { nome: 'Jägermeister (dose)', nomeEn: 'Jägermeister (shot)', preco: 300 },
+                { nome: 'Martini (dose)', nomeEn: 'Martini (shot)', preco: 240 },
+                { nome: 'Aperol (dose)', nomeEn: 'Aperol (shot)', preco: 250 },
+                { nome: 'Campari (dose)', nomeEn: 'Campari (shot)', preco: 240 },
+                { nome: 'Whisky (dose)', nomeEn: 'Whisky (shot)', preco: 500 },
+                { nome: 'Gin Tónico', nomeEn: 'Gin Tonic', preco: 500 },
+                { nome: 'Vodka (dose)', nomeEn: 'Vodka (shot)', preco: 350 },
+                { nome: 'Vinho (taça)', nomeEn: 'Wine (glass)', preco: 350 }
+            ];
+
+            const cortesEn = {
+                careca: 'Bald (Shaved)',
+                lowfade: 'Low Fade',
+                midfade: 'Mid Fade',
+                highfade: 'High Fade',
+                skinfade: 'Skin Fade',
+                baldfade: 'Bald Fade',
+                shadowfade: 'Shadow Fade',
+                taperfade: 'Taper Fade',
+                templefade: 'Temple Fade',
+                dropfade: 'Drop Fade',
+                burstfade: 'Burst Fade',
+                buzzcut: 'Buzz Cut',
+                crewcut: 'Crew Cut',
+                frenchcrop: 'French Crop',
+                caesarcut: 'Caesar Cut',
+                ivyleague: 'Ivy League',
+                texturedcrop: 'Textured Crop',
+                fringecrop: 'Fringe Crop',
+                curlytop: 'Curly Top Fade',
+                afrocurto: 'Short Afro',
+                afrofade: 'Afro Fade',
+                taperafro: 'Taper Afro',
+                hightopfade: 'High Top Fade',
+                flattop: 'Flat Top',
+                waves: '360 Waves',
+                spongecurls: 'Sponge Curls',
+                twists: 'Twists',
+                twostrand: 'Two-Strand Twists',
+                afrotwist: 'Afro Twist',
+                cornrows: 'Cornrows',
+                dreadshort: 'Short Dreadlocks',
+                dreadmedium: 'Medium Dreadlocks',
+                dreadlong: 'Long Dreadlocks',
+                boxbraids: 'Box Braids',
+                knotless: 'Knotless Braids',
+                undercut: 'Undercut',
+                sidepart: 'Side Part',
+                slickback: 'Slick Back',
+                pompadour: 'Pompadour',
+                quiff: 'Quiff',
+                combover: 'Comb Over',
+                militar: 'Military Cut',
+                americano: 'American Cut',
+                mohawk: 'Mohawk Fade',
+                fauxhawk: 'Faux Hawk Fade',
+                mullet: 'Modern Mullet',
+                wolfcut: 'Wolf Cut',
+                risca: 'Hair Design'
+            };
+
+            const barbasEn = {
+                cleanshaven: 'Clean Shaven',
+                stubble: 'Stubble',
+                curta: 'Short Beard',
+                media: 'Medium Beard',
+                longa: 'Long Beard',
+                fullbeard: 'Full Beard',
+                fadebeard: 'Fade Beard',
+                desenhada: 'Designed Beard',
+                alinhada: 'Aligned Beard',
+                cavanhaque: 'Goatee',
+                cavanhaquebigode: 'Goatee with Mustache',
+                bigodeclassico: 'Classic Mustache',
+                bigodechevron: 'Chevron Mustache',
+                bigodelapis: 'Pencil Mustache',
+                bigodeferradura: 'Horseshoe Mustache',
+                balbo: 'Balbo Beard',
+                vandyke: 'Van Dyke Beard',
+                anchor: 'Anchor Beard',
+                circlebeard: 'Circle Beard',
+                garibaldi: 'Garibaldi Beard',
+                ducktail: 'Ducktail Beard',
+                bandholz: 'Bandholz Beard',
+                viking: 'Viking Beard',
+                boxed: 'Boxed Beard',
+                chinstrap: 'Chin Strap',
+                muttonchops: 'Mutton Chops',
+                costeletasclassicas: 'Classic Sideburns',
+                costeletaslongas: 'Long Sideburns',
+                bigodecavanhaque: 'Mustache + Goatee',
+                bigodebarbacurta: 'Mustache + Short Beard'
+            };
+
+            const extrasEn = {
+                nenhum: 'None',
+                lavar: 'Hair Wash (100 MT)',
+                lavarcond: 'Wash + Conditioner (150 MT)',
+                massagem: 'Scalp Massage (200 MT)',
+                hidratacao: 'Hair Hydration (300 MT)',
+                gel: 'Gel/Pomade Application (50 MT)',
+                secador: 'Blow Dry Finish (100 MT)',
+                escovagem: 'Men\'s Brushing (150 MT)',
+                prancha: 'Temporary Straightening (250 MT)',
+                pinturabarba: 'Beard Painting (250 MT)',
+                pinturacabelo: 'Hair Painting (300 MT)',
+                pigmentacaobarba: 'Beard Pigmentation (250 MT)',
+                pigmentacaocabelo: 'Hair Pigmentation (300 MT)',
+                sobrancelhas: 'Eyebrow Design (100 MT)',
+                nariz: 'Nose Waxing (100 MT)',
+                orelhas: 'Ear Waxing (100 MT)',
+                limpeza: 'Simple Facial Cleansing (300 MT)',
+                esfoliacao: 'Facial Exfoliation (250 MT)',
+                mascara: 'Face Mask (200 MT)',
+                toalha: 'Hot Towel (100 MT)',
+                barboterapia: 'Beard Therapy (350 MT)',
+                apararbarba: 'Beard Trimming Only (150 MT)',
+                alinhamentobarba: 'Beard Alignment (100 MT)',
+                acabamento: 'Finishing (Edges) (50 MT)',
+                lavagembarba: 'Beard Wash (100 MT)',
+                massagemfacial: 'Facial Massage (200 MT)',
+                perfume: 'Premium Cologne (50 MT)',
+                bebidaextra: 'Drink (Water/Soda) (50 MT)',
+                cafeextra: 'Coffee (50 MT)'
+            };
+
+            const precosCortes = {
+                careca: 300,
+                lowfade: 350,
+                midfade: 350,
+                highfade: 350,
+                skinfade: 400,
+                baldfade: 400,
+                shadowfade: 380,
+                taperfade: 350,
+                templefade: 350,
+                dropfade: 380,
+                burstfade: 380,
+                buzzcut: 250,
+                crewcut: 250,
+                frenchcrop: 300,
+                caesarcut: 280,
+                ivyleague: 300,
+                texturedcrop: 320,
+                fringecrop: 320,
+                curlytop: 350,
+                afrocurto: 400,
+                afrofade: 450,
+                taperafro: 420,
+                hightopfade: 450,
+                flattop: 400,
+                waves: 350,
+                spongecurls: 350,
+                twists: 450,
+                twostrand: 450,
+                afrotwist: 450,
+                cornrows: 500,
+                dreadshort: 450,
+                dreadmedium: 500,
+                dreadlong: 550,
+                boxbraids: 500,
+                knotless: 550,
+                undercut: 350,
+                sidepart: 300,
+                slickback: 350,
+                pompadour: 400,
+                quiff: 380,
+                combover: 350,
+                militar: 280,
+                americano: 320,
+                mohawk: 400,
+                fauxhawk: 380,
+                mullet: 400,
+                wolfcut: 420,
+                risca: 350
+            };
+
+            const precosBarba = {
+                cleanshaven: 0,
+                stubble: 100,
+                curta: 150,
+                media: 200,
+                longa: 250,
+                fullbeard: 250,
+                fadebeard: 200,
+                desenhada: 180,
+                alinhada: 120,
+                cavanhaque: 100,
+                cavanhaquebigode: 130,
+                bigodeclassico: 80,
+                bigodechevron: 100,
+                bigodelapis: 80,
+                bigodeferradura: 120,
+                balbo: 150,
+                vandyke: 150,
+                anchor: 150,
+                circlebeard: 130,
+                garibaldi: 180,
+                ducktail: 200,
+                bandholz: 250,
+                viking: 250,
+                boxed: 180,
+                chinstrap: 120,
+                muttonchops: 150,
+                costeletasclassicas: 100,
+                costeletaslongas: 150,
+                bigodecavanhaque: 130,
+                bigodebarbacurta: 150
+            };
+
+            const precosExtras = {
+                nenhum: 0,
+                lavar: 100,
+                lavarcond: 150,
+                massagem: 200,
+                hidratacao: 300,
+                gel: 50,
+                secador: 100,
+                escovagem: 150,
+                prancha: 250,
+                pinturabarba: 250,
+                pinturacabelo: 300,
+                pigmentacaobarba: 250,
+                pigmentacaocabelo: 300,
+                sobrancelhas: 100,
+                nariz: 100,
+                orelhas: 100,
+                limpeza: 300,
+                esfoliacao: 250,
+                mascara: 200,
+                toalha: 100,
+                barboterapia: 350,
+                apararbarba: 150,
+                alinhamentobarba: 100,
+                acabamento: 50,
+                lavagembarba: 100,
+                massagemfacial: 200,
+                perfume: 50,
+                bebidaextra: 50,
+                cafeextra: 50
+            };
+
+            // ========== ELEMENTOS ==========
+            const bebidaSelect = document.getElementById('bebidaSelect');
+            const bebidaGroup = document.getElementById('bebidaGroup');
+            const corteSelect = document.getElementById('corteSelect');
+            const barbaSelect = document.getElementById('barbaSelect');
+            const extraSelect = document.getElementById('extraSelect');
+            const precoValor = document.getElementById('precoValor');
+            const precoLabel = document.getElementById('precoLabel');
+            const descontoInfo = document.getElementById('descontoInfo');
+            const domicilioCheck = document.getElementById('domicilioCheck');
+            const dataInput = document.getElementById('dataInput');
+            const horaInput = document.getElementById('horaInput');
+            const localizacaoInput = document.getElementById('localizacaoInput');
+            const btnAgendar = document.getElementById('btnAgendar');
+            const btnAgendarText = document.getElementById('btnAgendarText');
+            const historicoLista = document.getElementById('historicoLista');
+            const semPedidos = document.getElementById('semPedidos');
+
+            // ========== NAV BAR ==========
+            const navSobre = document.getElementById('navSobre');
+            const navLocalizacao = document.getElementById('navLocalizacao');
+            const navContactos = document.getElementById('navContactos');
+
+            // ========== POPUP ==========
+            const popupOverlay = document.getElementById('popupOverlay');
+            const popupDetalhes = document.getElementById('popupDetalhes');
+            const popupFechar = document.getElementById('popupFechar');
+            const popupTitulo = document.getElementById('popupTitulo');
+            const popupSub = document.getElementById('popupSub');
+            const popupBtnText = document.getElementById('popupBtnText');
+
+            // ========== TRADUÇÃO ==========
+            let currentLang = localStorage.getItem('ultraLang') || 'pt';
+
+            const translations = {
+                pt: {
+                    corte: 'Corte',
+                    barba: 'Barba',
+                    bebida: 'Bebida',
+                    extra: 'Extra',
+                    data: 'Data',
+                    hora: 'Horário',
+                    localizacao: 'Localização',
+                    domicilio: 'Corte ao domicílio (+35%)',
+                    preco: 'Preço Final:',
+                    agendar: 'Agendar',
+                    historico: 'Histórico de Pedidos',
+                    semPedidos: 'Nenhum pedido realizado ainda.',
+                    popupTitulo: '✅ Pedido Confirmado!',
+                    popupSub: 'Seu agendamento foi realizado com sucesso.',
+                    popupBtn: 'Fechar',
+                    footerCopy: '© 2026 Ultra Barber · Todos os direitos reservados',
+                    selo1: 'SSL Seguro',
+                    selo2: 'Proteção de Dados',
+                    selo3: 'Pagamento Seguro',
+                    link1: 'Política',
+                    link2: 'Trabalhe conosco',
+                    link3: 'FAQ',
+                    banner: 'Bem vindo à <span>Ultra Barber</span>, onde o seu estilo ganha força!',
+                    titulo: 'Agendamento',
+                    corteLabel: 'Corte',
+                    barbaLabel: 'Barba',
+                    bebidaLabel: 'Bebida',
+                    extraLabel: 'Extra',
+                    dataLabel: 'Data',
+                    horaLabel: 'Horário',
+                    localizacaoLabel: 'Localização',
+                    domicilioLabel: 'Corte ao domicílio (+35%)',
+                    sobre: 'Sobre',
+                    localizacaoNav: 'Localização',
+                    contactos: 'Contactos'
+                },
+                en: {
+                    corte: 'Haircut',
+                    barba: 'Beard',
+                    bebida: 'Drink',
+                    extra: 'Extra',
+                    data: 'Date',
+                    hora: 'Time',
+                    localizacao: 'Location',
+                    domicilio: 'Home delivery (+35%)',
+                    preco: 'Final Price:',
+                    agendar: 'Book',
+                    historico: 'Order History',
+                    semPedidos: 'No orders placed yet.',
+                    popupTitulo: '✅ Order Confirmed!',
+                    popupSub: 'Your appointment has been successfully scheduled.',
+                    popupBtn: 'Close',
+                    footerCopy: '© 2026 Ultra Barber · All rights reserved',
+                    selo1: 'SSL Secure',
+                    selo2: 'Data Protection',
+                    selo3: 'Secure Payment',
+                    link1: 'Policy',
+                    link2: 'Work with us',
+                    link3: 'FAQ',
+                    banner: 'Welcome to <span>Ultra Barber</span>, where your style gains strength!',
+                    titulo: 'Booking',
+                    corteLabel: 'Haircut',
+                    barbaLabel: 'Beard',
+                    bebidaLabel: 'Drink',
+                    extraLabel: 'Extra',
+                    dataLabel: 'Date',
+                    horaLabel: 'Time',
+                    localizacaoLabel: 'Location',
+                    domicilioLabel: 'Home delivery (+35%)',
+                    sobre: 'About',
+                    localizacaoNav: 'Location',
+                    contactos: 'Contact'
+                }
+            };
+
+            function getText(key) {
+                return translations[currentLang][key] || translations['pt'][key];
+            }
+
+            // ========== PREENCHER BEBIDAS (SEM FILTRO DE ÁLCOOL) ==========
+            function preencherBebidas() {
+                const valorAtual = bebidaSelect.value;
+                bebidaSelect.innerHTML = '';
+                bebidas.forEach(b => {
+                    const opt = document.createElement('option');
+                    opt.value = b.preco;
+                    const nome = currentLang === 'en' ? b.nomeEn : b.nome;
+                    opt.textContent = nome + (b.preco > 0 ? ` (${b.preco} MT)` : '');
+                    opt.dataset.preco = b.preco;
+                    bebidaSelect.appendChild(opt);
+                });
+                // Tenta restaurar o valor anterior, senão seleciona "Nenhum"
+                const valorExiste = bebidas.some(b => b.preco == valorAtual);
+                if (valorExiste && valorAtual !== null) {
+                    bebidaSelect.value = valorAtual;
+                } else {
+                    bebidaSelect.value = '0';
+                }
+            }
+
+            // ========== TRADUZIR OPÇÕES DOS SELECTS ==========
+            function traduzirSelects() {
+                for (let i = 0; i < corteSelect.options.length; i++) {
+                    const opt = corteSelect.options[i];
+                    const val = opt.value;
+                    if (currentLang === 'en' && cortesEn[val]) {
+                        opt.textContent = cortesEn[val];
+                    } else if (currentLang === 'pt') {
+                        const nomesPt = {
+                            careca: 'Careca (Raspado Total)',
+                            lowfade: 'Degradê (Low Fade)',
+                            midfade: 'Degradê (Mid Fade)',
+                            highfade: 'Degradê (High Fade)',
+                            skinfade: 'Skin Fade',
+                            baldfade: 'Bald Fade',
+                            shadowfade: 'Shadow Fade',
+                            taperfade: 'Taper Fade',
+                            templefade: 'Temple Fade',
+                            dropfade: 'Drop Fade',
+                            burstfade: 'Burst Fade',
+                            buzzcut: 'Buzz Cut',
+                            crewcut: 'Crew Cut',
+                            frenchcrop: 'French Crop',
+                            caesarcut: 'Caesar Cut',
+                            ivyleague: 'Ivy League',
+                            texturedcrop: 'Textured Crop',
+                            fringecrop: 'Fringe Crop',
+                            curlytop: 'Curly Top Fade',
+                            afrocurto: 'Afro Curto',
+                            afrofade: 'Afro com Fade',
+                            taperafro: 'Taper Afro',
+                            hightopfade: 'High Top Fade',
+                            flattop: 'Flat Top',
+                            waves: '360 Waves',
+                            spongecurls: 'Sponge Curls',
+                            twists: 'Twists',
+                            twostrand: 'Two-Strand Twists',
+                            afrotwist: 'Afro Twist',
+                            cornrows: 'Cornrows',
+                            dreadshort: 'Dreadlocks Curtos',
+                            dreadmedium: 'Dreadlocks Médios',
+                            dreadlong: 'Dreadlocks Longos',
+                            boxbraids: 'Box Braids Masculinas',
+                            knotless: 'Knotless Braids Masculinas',
+                            undercut: 'Undercut',
+                            sidepart: 'Side Part',
+                            slickback: 'Slick Back',
+                            pompadour: 'Pompadour',
+                            quiff: 'Quiff',
+                            combover: 'Comb Over',
+                            militar: 'Corte Militar',
+                            americano: 'Corte Americano',
+                            mohawk: 'Mohawk Fade',
+                            fauxhawk: 'Faux Hawk Fade',
+                            mullet: 'Mullet Moderno',
+                            wolfcut: 'Wolf Cut Masculino',
+                            risca: 'Corte com Risca'
+                        };
+                        if (nomesPt[val]) opt.textContent = nomesPt[val];
+                    }
+                }
+
+                for (let i = 0; i < barbaSelect.options.length; i++) {
+                    const opt = barbaSelect.options[i];
+                    const val = opt.value;
+                    if (currentLang === 'en' && barbasEn[val]) {
+                        opt.textContent = barbasEn[val];
+                    } else if (currentLang === 'pt') {
+                        const nomesPt = {
+                            cleanshaven: 'Sem Barba',
+                            stubble: 'Barba por Fazer',
+                            curta: 'Barba Curta',
+                            media: 'Barba Média',
+                            longa: 'Barba Longa',
+                            fullbeard: 'Barba Cheia',
+                            fadebeard: 'Barba Degradê',
+                            desenhada: 'Barba Desenhada',
+                            alinhada: 'Barba Alinhada',
+                            cavanhaque: 'Cavanhaque',
+                            cavanhaquebigode: 'Cavanhaque c/ Bigode',
+                            bigodeclassico: 'Bigode Clássico',
+                            bigodechevron: 'Bigode Chevron',
+                            bigodelapis: 'Bigode Lápis',
+                            bigodeferradura: 'Bigode Ferradura',
+                            balbo: 'Barba Balbo',
+                            vandyke: 'Barba Van Dyke',
+                            anchor: 'Barba Anchor',
+                            circlebeard: 'Barba Circle Beard',
+                            garibaldi: 'Barba Garibaldi',
+                            ducktail: 'Barba Ducktail',
+                            bandholz: 'Barba Bandholz',
+                            viking: 'Barba Viking',
+                            boxed: 'Barba Boxed',
+                            chinstrap: 'Chin Strap',
+                            muttonchops: 'Mutton Chops',
+                            costeletasclassicas: 'Costeletas Clássicas',
+                            costeletaslongas: 'Costeletas Longas',
+                            bigodecavanhaque: 'Bigode + Cavanhaque',
+                            bigodebarbacurta: 'Bigode + Barba Curta'
+                        };
+                        if (nomesPt[val]) opt.textContent = nomesPt[val];
+                    }
+                }
+
+                for (let i = 0; i < extraSelect.options.length; i++) {
+                    const opt = extraSelect.options[i];
+                    const val = opt.value;
+                    if (currentLang === 'en' && extrasEn[val]) {
+                        opt.textContent = extrasEn[val];
+                    } else if (currentLang === 'pt') {
+                        const nomesPt = {
+                            nenhum: 'Nenhum',
+                            lavar: 'Lavar a Cabeça (100 MT)',
+                            lavarcond: 'Lavar + Condicionador (150 MT)',
+                            massagem: 'Massagem ao Couro Cabeludo (200 MT)',
+                            hidratacao: 'Hidratação Capilar (300 MT)',
+                            gel: 'Aplicação de Gel/Pomada (50 MT)',
+                            secador: 'Finalização com Secador (100 MT)',
+                            escovagem: 'Escovagem Masculina (150 MT)',
+                            prancha: 'Prancha (Alisamento Temporário) (250 MT)',
+                            pinturabarba: 'Pintura da Barba (250 MT)',
+                            pinturacabelo: 'Pintura do Cabelo (300 MT)',
+                            pigmentacaobarba: 'Pigmentação da Barba (250 MT)',
+                            pigmentacaocabelo: 'Pigmentação do Cabelo (300 MT)',
+                            sobrancelhas: 'Design de Sobrancelhas (100 MT)',
+                            nariz: 'Depilação de Nariz (100 MT)',
+                            orelhas: 'Depilação de Orelhas (100 MT)',
+                            limpeza: 'Limpeza Facial Simples (300 MT)',
+                            esfoliacao: 'Esfoliação Facial (250 MT)',
+                            mascara: 'Máscara Facial (200 MT)',
+                            toalha: 'Toalha Quente (100 MT)',
+                            barboterapia: 'Barboterapia (350 MT)',
+                            apararbarba: 'Aparar Apenas a Barba (150 MT)',
+                            alinhamentobarba: 'Alinhamento da Barba (100 MT)',
+                            acabamento: 'Acabamento (Pezinho) (50 MT)',
+                            lavagembarba: 'Lavagem da Barba (100 MT)',
+                            massagemfacial: 'Massagem Facial (200 MT)',
+                            perfume: 'Perfume/Colónia Premium (50 MT)',
+                            bebidaextra: 'Bebida (Água/Refrigerante) (50 MT)',
+                            cafeextra: 'Café (50 MT)'
+                        };
+                        if (nomesPt[val]) opt.textContent = nomesPt[val];
+                    }
+                }
+
+                preencherBebidas();
+            }
+
+            // ========== APLICAR TRADUÇÃO ==========
+            function aplicarTraducao() {
+                const t = translations[currentLang];
+
+                document.getElementById('labelCorte').innerHTML = `<i class="fas fa-cut"></i> ${t.corteLabel}`;
+                document.getElementById('labelBarba').innerHTML = `<i class="fas fa-hand-sparkles"></i> ${t.barbaLabel}`;
+                document.getElementById('labelBebida').innerHTML = `<i class="fas fa-mug-hot"></i> ${t.bebidaLabel}`;
+                document.getElementById('labelExtra').innerHTML = `<i class="fas fa-plus-circle"></i> ${t.extraLabel}`;
+                document.getElementById('labelData').innerHTML = `<i class="fas fa-calendar-day"></i> ${t.dataLabel}`;
+                document.getElementById('labelHora').innerHTML = `<i class="fas fa-clock"></i> ${t.horaLabel}`;
+                document.getElementById('labelLocalizacao').innerHTML = `<i class="fas fa-map-pin"></i> ${t.localizacaoLabel}`;
+                document.getElementById('labelDomicilio').innerHTML =
+                    `<i class="fas fa-truck" style="color: #f5d742;"></i> ${t.domicilioLabel}`;
+
+                precoLabel.textContent = t.preco;
+                btnAgendarText.textContent = t.agendar;
+                document.getElementById('historicoTitulo').innerHTML = `<i class="fas fa-history"></i> ${t.historico}`;
+                semPedidos.textContent = t.semPedidos;
+
+                document.getElementById('bannerTexto').innerHTML =
+                    `<i class="fas fa-scissors"></i> ${t.banner} <i class="fas fa-scissors"></i>`;
+                document.getElementById('pageTitle').innerHTML =
+                    `<i class="fas fa-calendar-check" style="margin-right: 14px;"></i>${t.titulo}`;
+
+                popupTitulo.textContent = t.popupTitulo;
+                popupSub.textContent = t.popupSub;
+                popupBtnText.textContent = t.popupBtn;
+
+                document.getElementById('footerCopy').textContent = t.footerCopy;
+                document.getElementById('selo1').innerHTML = `<i class="fas fa-lock"></i> ${t.selo1}`;
+                document.getElementById('selo2').innerHTML = `<i class="fas fa-shield-alt"></i> ${t.selo2}`;
+                document.getElementById('selo3').innerHTML = `<i class="fas fa-credit-card"></i> ${t.selo3}`;
+                document.getElementById('linkPolitica').textContent = t.link1;
+                document.getElementById('linkTrabalhe').textContent = t.link2;
+                document.getElementById('linkFaq').textContent = t.link3;
+
+                navSobre.textContent = t.sobre;
+                navLocalizacao.textContent = t.localizacaoNav;
+                navContactos.textContent = t.contactos;
+
+                traduzirSelects();
+                calcularPreco();
+            }
+
+            // ========== CALCULAR PREÇO (SEM DESCONTO DE CRIANÇA) ==========
+            function calcularPreco() {
+                const isDomicilio = domicilioCheck.checked;
+
+                // Controle de exibição do campo Bebida
+                if (isDomicilio) {
+                    bebidaGroup.style.display = 'none';
+                } else {
+                    bebidaGroup.style.display = 'flex';
+                }
+
+                if (isDomicilio) {
+                    bebidaSelect.disabled = true;
+                    extraSelect.disabled = true;
+                    bebidaSelect.value = '0';
+                    extraSelect.value = 'nenhum';
+                } else {
+                    bebidaSelect.disabled = false;
+                    extraSelect.disabled = false;
+                }
+
+                const corte = corteSelect.value;
+                const barba = barbaSelect.value;
+                const extra = extraSelect.value;
+                const bebidaPreco = parseInt(bebidaSelect.value) || 0;
+
+                let total = 0;
+                total += precosCortes[corte] || 250;
+                total += precosBarba[barba] || 0;
+                if (!isDomicilio) {
+                    total += precosExtras[extra] || 0;
+                    total += bebidaPreco;
+                }
+
+                if (isDomicilio) {
+                    const acrescimo = Math.round(total * 0.35);
+                    total = total + acrescimo;
+                    descontoInfo.textContent = currentLang === 'en' ?
+                        `🚚 Home delivery (+35%): +${acrescimo} MT` :
+                        `🚚 Domicílio (+35%): +${acrescimo} MT`;
+                } else {
+                    descontoInfo.textContent = '';
+                }
+
+                precoValor.textContent = total;
+            }
+
+            // ========== ADICIONAR AO HISTÓRICO ==========
+            function adicionarHistorico(pedido) {
+                const sem = document.querySelector('.sem-pedidos');
+                if (sem) sem.remove();
+
+                const item = document.createElement('div');
+                item.className = 'historico-item';
+                item.dataset.id = Date.now();
+
+                const info = document.createElement('div');
+                info.className = 'info';
+                info.innerHTML = `
+                    <div class="nome">${pedido.nome}</div>
+                    <div class="detalhes">${pedido.detalhes}</div>
+                    <div class="preco-historico">💰 ${pedido.total} MT</div>
+                `;
+
+                const btn = document.createElement('button');
+                btn.className = 'btn-eliminar';
+                btn.innerHTML = currentLang === 'en' ?
+                    '<i class="fas fa-trash-alt"></i> Delete' :
+                    '<i class="fas fa-trash-alt"></i> Eliminar';
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    item.remove();
+                    if (historicoLista.children.length === 0) {
+                        const empty = document.createElement('div');
+                        empty.className = 'sem-pedidos';
+                        empty.textContent = translations[currentLang].semPedidos;
+                        historicoLista.appendChild(empty);
+                    }
+                });
+
+                item.appendChild(info);
+                item.appendChild(btn);
+                historicoLista.appendChild(item);
+            }
+
+            // ========== EXIBIR POPUP ==========
+            function exibirPopup(pedido) {
+                const t = translations[currentLang];
+                const corteLabel = t.corte || 'Corte';
+                const barbaLabel = t.barba || 'Barba';
+                const bebidaLabel = t.bebida || 'Bebida';
+                const extraLabel = t.extra || 'Extra';
+                const dataLabel = t.data || 'Data';
+                const horaLabel = t.hora || 'Horário';
+                const localLabel = t.localizacao || 'Localização';
+
+                popupDetalhes.innerHTML = `
+                    <strong>✂️ ${corteLabel}:</strong> ${pedido.corte}<br>
+                    <strong>🧔 ${barbaLabel}:</strong> ${pedido.barba}<br>
+                    <strong>🥤 ${bebidaLabel}:</strong> ${pedido.bebida}<br>
+                    <strong>➕ ${extraLabel}:</strong> ${pedido.extra}<br>
+                    <strong>📅 ${dataLabel}:</strong> ${pedido.data}<br>
+                    <strong>🕐 ${horaLabel}:</strong> ${pedido.hora}<br>
+                    <strong>📍 ${localLabel}:</strong> ${pedido.localizacao}<br>
+                    ${pedido.domicilio ? '🚚 <strong>Home delivery</strong><br>' : ''}
+                    <strong>💰 ${t.preco || 'Preço Final:'}</strong> ${pedido.total} MT
+                `;
+                popupOverlay.classList.add('active');
+            }
+
+            // ========== AGENDAR ==========
+            function agendar() {
+                const isDomicilio = domicilioCheck.checked;
+
+                const corteNome = corteSelect.options[corteSelect.selectedIndex].text;
+                const barbaNome = barbaSelect.options[barbaSelect.selectedIndex].text;
+                const bebidaNome = bebidaSelect.options[bebidaSelect.selectedIndex].text;
+                const extraNome = extraSelect.options[extraSelect.selectedIndex].text;
+                const data = dataInput.value || '30/07/2026';
+                const hora = horaInput.value || '14:00';
+                const localizacao = localizacaoInput.value || 'Não informada';
+                const total = precoValor.textContent;
+
+                const pedido = {
+                    nome: `Pedido #${Date.now().toString().slice(-6)}`,
+                    corte: corteNome,
+                    barba: barbaNome,
+                    bebida: bebidaNome,
+                    extra: extraNome,
+                    data: data,
+                    hora: hora,
+                    localizacao: localizacao,
+                    domicilio: isDomicilio,
+                    total: total,
+                    detalhes: `${corteNome} • ${barbaNome} • ${data} ${hora}`
+                };
+
+                adicionarHistorico(pedido);
+                exibirPopup(pedido);
+
+                if (isDomicilio) {
+                    domicilioCheck.checked = false;
+                    bebidaSelect.disabled = false;
+                    extraSelect.disabled = false;
+                    calcularPreco();
+                }
+            }
+
+            // ========== EVENTOS ==========
+            corteSelect.addEventListener('change', calcularPreco);
+            barbaSelect.addEventListener('change', calcularPreco);
+            extraSelect.addEventListener('change', calcularPreco);
+            bebidaSelect.addEventListener('change', calcularPreco);
+            domicilioCheck.addEventListener('change', calcularPreco);
+
+            btnAgendar.addEventListener('click', agendar);
+
+            popupFechar.addEventListener('click', function() {
+                popupOverlay.classList.remove('active');
+            });
+
+            popupOverlay.addEventListener('click', function(e) {
+                if (e.target === popupOverlay) {
+                    popupOverlay.classList.remove('active');
+                }
+            });
+
+            // ========== TEMA ==========
+            const themeToggle = document.getElementById('themeToggle');
+            const themeLabel = document.getElementById('themeLabel');
+            const body = document.body;
+
+            const currentTheme = localStorage.getItem('ultraTheme');
+            if (currentTheme === 'light') {
+                body.classList.add('light-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> <span id="themeLabel">Claro</span>';
+                document.getElementById('themeLabel').textContent = 'Claro';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> <span id="themeLabel">Escuro</span>';
+                document.getElementById('themeLabel').textContent = 'Escuro';
+            }
+
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('light-mode');
+                const isLight = body.classList.contains('light-mode');
+                localStorage.setItem('ultraTheme', isLight ? 'light' : 'dark');
+                if (isLight) {
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i> <span id="themeLabel">Claro</span>';
+                    document.getElementById('themeLabel').textContent = 'Claro';
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i> <span id="themeLabel">Escuro</span>';
+                    document.getElementById('themeLabel').textContent = 'Escuro';
+                }
+            });
+
+            // ========== LANG ==========
+            const langToggle = document.getElementById('langToggle');
+            const langLabel = document.getElementById('langLabel');
+
+            if (currentLang === 'en') {
+                langLabel.textContent = 'PT';
+            } else {
+                langLabel.textContent = 'EN';
+            }
+
+            langToggle.addEventListener('click', function() {
+                const newLang = (currentLang === 'pt') ? 'en' : 'pt';
+                currentLang = newLang;
+                localStorage.setItem('ultraLang', newLang);
+                langLabel.textContent = newLang === 'en' ? 'PT' : 'EN';
+                aplicarTraducao();
+            });
+
+            // ========== RELÓGIO ==========
+            function updateClock() {
+                const now = new Date();
+                document.getElementById('currentTime').textContent = now.toLocaleTimeString('pt-BR', { hour12: false });
+            }
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            // ========== DATA MÍNIMA ==========
+            const hoje = new Date();
+            const amanha = new Date(hoje);
+            amanha.setDate(hoje.getDate() + 1);
+            dataInput.min = amanha.toISOString().split('T')[0];
+            dataInput.value = amanha.toISOString().split('T')[0];
+
+            // ========== INICIALIZAR ==========
+            preencherBebidas();
+            aplicarTraducao();
+
+        })();
+    </script>
+</body>
+</html>
